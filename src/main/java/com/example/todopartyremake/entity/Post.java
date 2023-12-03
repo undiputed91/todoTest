@@ -19,6 +19,8 @@ public class Post extends Timestamped{
     private String title;
     @Column(nullable = false)
     private String contents;
+    @Column
+    private Boolean isCompleted;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -28,10 +30,15 @@ public class Post extends Timestamped{
         this.title = postRequestDto.getTitle();
         this.contents = postRequestDto.getContents();
         this.user = userDetailsImpl.getUser();
+        this.isCompleted = false;
     }
 
     public void update(PostRequestDto requestDto) {
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();
+    }
+
+    public void clickCompleted(){
+        this.isCompleted = true;
     }
 }

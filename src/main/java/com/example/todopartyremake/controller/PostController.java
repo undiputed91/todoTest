@@ -48,4 +48,13 @@ public class PostController {
             return ResponseEntity.badRequest().body(new CommonResponseDto(e.getMessage(),HttpStatus.BAD_REQUEST.value()));
         }
     }
+    @PatchMapping("/{id}/complete")
+    public ResponseEntity<CommonResponseDto>postComplete(@PathVariable Long id, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        try {
+            postService.postComplete(id,userDetails);
+            return ResponseEntity.ok().body(new CommonResponseDto("완료!",HttpStatus.OK.value()));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new CommonResponseDto(e.getMessage(),HttpStatus.BAD_REQUEST.value()));
+        }
+    }
 }

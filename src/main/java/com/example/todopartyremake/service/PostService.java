@@ -48,4 +48,10 @@ public class PostService {
         }
         post.update(requestDto);
     }
+
+    @Transactional
+    public void postComplete(Long id, UserDetailsImpl userDetails) {
+        Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
+        post.clickCompleted();
+    }
 }
