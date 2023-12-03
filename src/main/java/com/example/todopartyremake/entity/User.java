@@ -21,8 +21,8 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    public User (UserRequestDto userRequestDto){
+    public User (UserRequestDto userRequestDto,String encodedPassword){
         this.username = userRequestDto.getUsername();
-        this.password = userRequestDto.getPassword();
+        this.password = encodedPassword;
     }
 }
