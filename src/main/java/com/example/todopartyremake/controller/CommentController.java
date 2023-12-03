@@ -37,4 +37,13 @@ public class CommentController {
         }
     }
 
+    @DeleteMapping("/{id}/comments/{commentId}")
+    public ResponseEntity<CommonResponseDto> deleteComment(@PathVariable Long id,@PathVariable Long commentId,@AuthenticationPrincipal UserDetailsImpl user){
+        try {
+            commnetService.deleteComment(id,commentId,user);
+            return ResponseEntity.ok().body(new CommonResponseDto("삭제완료", HttpStatus.OK.value()));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(new CommonResponseDto(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
+        }
+    }
 }
