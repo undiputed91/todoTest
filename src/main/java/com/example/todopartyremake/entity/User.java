@@ -6,6 +6,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table
 @Getter
@@ -21,8 +24,13 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @OneToMany(mappedBy = "user")
+    private List<Post>postList = new ArrayList<>();
+
     public User (UserRequestDto userRequestDto,String encodedPassword){
         this.username = userRequestDto.getUsername();
         this.password = encodedPassword;
     }
+
+
 }
