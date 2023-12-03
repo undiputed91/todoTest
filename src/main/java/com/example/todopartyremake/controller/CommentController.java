@@ -27,4 +27,14 @@ public class CommentController {
             return ResponseEntity.badRequest().body(new CommonResponseDto(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
         }
     }
+    @PatchMapping("/{id}/comments/{commentId}")
+    public ResponseEntity<CommonResponseDto> modifyComment(@PathVariable Long id,@PathVariable Long commentId, @RequestBody CommentRequestDto commentRequestDto,@AuthenticationPrincipal UserDetailsImpl user){
+        try {
+            commnetService.modifyComment(id,commentId,commentRequestDto,user);
+            return ResponseEntity.ok().body(new CommonResponseDto("수정완료", HttpStatus.OK.value()));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new CommonResponseDto(e.getMessage(), HttpStatus.BAD_REQUEST.value()));
+        }
+    }
+
 }
