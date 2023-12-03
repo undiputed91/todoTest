@@ -8,6 +8,9 @@ import com.example.todopartyremake.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class PostService {
@@ -18,5 +21,20 @@ public class PostService {
         Post savePost = postRepository.save(post);
         PostResponseDto postResponseDto = new PostResponseDto(savePost);
         return postResponseDto;
+    }
+
+    public List<PostResponseDto> getPostList() {
+
+        List<Post> postList = postRepository.findAll();
+        List<PostResponseDto> response = new ArrayList<>();
+        for(int i = 0; i< postList.size();i++){
+            response.add(new PostResponseDto(postList.get(i)));
+        }
+        return response;
+    }
+
+    public PostResponseDto getPost(Long id) {
+        Post post = postRepository.findById(id).orElseThrow(()->new IllegalArgumentException("해당 id 게시물이 없습니다."));
+        return new PostResponseDto(post);
     }
 }
