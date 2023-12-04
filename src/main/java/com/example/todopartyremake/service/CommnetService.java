@@ -32,13 +32,15 @@ public class CommnetService {
     }
 
     @Transactional
-    public void modifyComment(Long id, Long commentId, CommentRequestDto req, UserDetailsImpl user) {
+    public CommentResponseDto modifyComment(Long id, Long commentId, CommentRequestDto req, UserDetailsImpl user) {
         Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException(("해당 게시글이 없습니다.")));
         Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new IllegalArgumentException(("해당 댓글이 없습니다.")));
         if (!Objects.equals(comment.getUser().getId(), user.getUser().getId())) {
             throw new IllegalArgumentException("댓글 작성자만 수정 가능합니다");
         }
         comment.update(req);
+        CommentResponseDto commentResponsedto = new CommentResponseDto(comment);
+        return commentResponsedto;
     }
 
     public void deleteComment(Long id, Long commentId, UserDetailsImpl user) {
